@@ -16,7 +16,6 @@ import com.example.demo08.Model.Student;
 import com.example.demo08.Service.ScholarshipService;
 import com.example.demo08.Service.StudentService;
 
-
 @Controller
 @RequestMapping("/teacher")
 public class TeacherController {
@@ -30,7 +29,6 @@ public class TeacherController {
         this.scholarshipService = scholarshipService;
     }
 
-   
     @GetMapping("/dashboard")
     public String teacherDashboard(Model model) {
         List<Student> students = studentService.getAllStudents();
@@ -38,7 +36,6 @@ public class TeacherController {
         return "teacher";
     }
 
-   
     @PostMapping("/approve/{username}")
     public String approveStudent(@PathVariable String username, Authentication authentication) {
         String teacherUsername = authentication.getName();
@@ -55,7 +52,6 @@ public class TeacherController {
         return "redirect:/teacher/dashboard";
     }
 
-    
     @GetMapping("/pending")
     public String showPendingStudents(Model model) {
         List<Student> pendingStudents = studentService.getPendingStudents();

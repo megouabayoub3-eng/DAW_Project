@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Admin - Students</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <h1>Students</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Status</th>
+          <th>Registered</th>
+          <th>Approved At</th>
+          <th>Approved By</th>
+          <th>Rejection Reason</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="s : ${students}">
+          <td th:text="${s.username}">student</td>
+          <td th:text="${s.status}">PENDING</td>
+          <td th:text="${s.registrationDate}">2026-01-01</td>
+          <td th:text="${s.approvalDate}">-</td>
+          <td th:text="${s.approvedByTeacher}">-</td>
+          <td th:text="${s.rejectionReason}">-</td>
+          <td>
+            <form
+              th:action="@{|/admin/students/${s.username}/approve|}"
+              method="post"
+              style="display: inline"
+            >
+              <button type="submit" th:if="${s.status.name() == 'PENDING'}">
+                Approve
+              </button>
+            </form>
+            <form
+              th:action="@{|/admin/students/${s.username}/reject|}"
+              method="post"
+              style="display: inline"
+            >
+              <input type="text" name="reason" placeholder="reason" />
+              <button type="submit" th:if="${s.status.name() == 'PENDING'}">
+                Reject
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p><a href="/admin/users">Back to users</a></p>
+  </body>
+</html>

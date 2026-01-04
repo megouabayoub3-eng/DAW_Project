@@ -1,17 +1,21 @@
 package com.example.demo08.Config;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.example.demo08.Model.RegistrationStatus;
+import com.example.demo08.Model.Role;
 import com.example.demo08.Model.ScholarshipApplication;
 import com.example.demo08.Model.Student;
 import com.example.demo08.Model.User;
 import com.example.demo08.Repository.ScholarshipApplicationRepository;
 import com.example.demo08.Repository.StudentRepository;
+import com.example.demo08.Repository.UserRepository;
 
 /**
  * Initializes the database with default users and students.
@@ -44,28 +48,21 @@ public class DataInitializer implements CommandLineRunner {
      * Checks for existing users to prevent duplicates on application restart.
      */
     private void initializeUsers() {
-        List<String> usernames = Arrays.asList("teacher", "student");
+        List<String> usernames = Arrays.asList("admin", "teacher", "student");
 
         for (String username : usernames) {
             if (!userRepository.existsByUsername(username)) {
-                User user = null;
+                User user = new User(username, username + "@example.com", passwordEncoder.encode(username + "123"));
 
-                if ("teacher".equals(username)) {
-                    user = new User(
-                            username,
-                            passwordEncoder.encode("teacher123"), // Properly encoded password
-                            "ROLE_TEACHER");
-                } else if ("student".equals(username)) {
-                    user = new User(
-                            username,
-                            passwordEncoder.encode("student123"), // Properly encoded password
-                            "ROLE_STUDENT");
+                if ("admin".equals(username)) {
+                    user.setRoles(EnumSet.of(Role.ROLE_ADMIN));
+                } else {
+                    user.setRoles(EnumSet.of(Role.ROLE_USER));
                 }
 
-                if (user != null) {
-                    userRepository.save(user);
-                    System.out.println("Created user: " + username);
-                }
+                user.setStatus(RegistrationStatus.APPROVED);
+                userRepository.save(user);
+                System.out.println("Created user: " + username);
             } else {
                 System.out.println("User already exists: " + username);
             }

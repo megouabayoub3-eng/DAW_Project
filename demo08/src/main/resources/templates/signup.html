@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+  <!DOCTYPE html>
+  <html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  >
+    <head>
+      <title>Sign Up</title>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet"
+      />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <style>
+        /* Minimal inline styles for the signup form */
+        body {
+          font-family: Arial, sans-serif;
+          padding: 24px;
+        }
+        form {
+          max-width: 420px;
+          margin: auto;
+        }
+        label {
+          display: block;
+          margin-bottom: 8px;
+        }
+        input,
+        select {
+          width: 100%;
+          padding: 8px;
+          margin-top: 4px;
+          box-sizing: border-box;
+        }
+        .error {
+          color: #b00020;
+          margin-bottom: 12px;
+        }
+        .success {
+          color: #0a7a0a;
+          margin-bottom: 12px;
+        }
+        .hint {
+          font-size: 0.9em;
+          color: #666;
+        }
+        button {
+          padding: 10px 16px;
+        }
+      </style>
+    </head>
+    <body>
+      <div th:replace="fragments/header :: header"></div>
+      <h1>Sign Up</h1>
+      <div
+        id="serverError"
+        class="error"
+        th:if="${error}"
+        th:text="${error}"
+      ></div>
+      <div id="emailError" class="error" style="display: none"></div>
+      <div id="passwordError" class="error" style="display: none"></div>
+
+      <form
+        id="signupForm"
+        th:action="@{/auth/signup}"
+        th:object="${signupForm}"
+        method="post"
+        novalidate
+      >
+        <input
+          type="hidden"
+          th:name="${_csrf.parameterName}"
+          th:value="${_csrf.token}"
+        />
+        <div
+          id="errorSummary"
+          class="error"
+          role="alert"
+          aria-live="assertive"
+          style="display: none"
+        ></div>
+        <div>
+          <label for="name">Full name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            th:field="*{name}"
+            placeholder="Jane Doe"
+            aria-describedby="nameHint nameError"
+          />
+          <div id="nameHint" class="hint">
+            Enter your full name as you would like it displayed.
+          </div>
+          <div
+            id="nameError"
+            class="error"
+            th:if="${#fields.hasErrors('name')}"
+            th:errors="*{name}"
+          ></div>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            th:field="*{email}"
+            placeholder="you@example.com"
+            aria-describedby="emailError"
+          />
+          <div
+            id="emailError"
+            class="error"
+            th:if="${#fields.hasErrors('email')}"
+            th:errors="*{email}"
+          ></div>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <div style="position: relative">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              th:field="*{password}"
+              placeholder="Choose a strong password"
+              aria-describedby="passwordHint passwordError pwdStrength"
+            />
+            <button
+              type="button"
+              id="togglePwd"
+              aria-label="Toggle password visibility"
+              style="position: absolute; right: 6px; top: 6px"
+            >
+              👁️
+            </button>
+          </div>
+          <div id="passwordHint" class="hint">
+            At least 8 characters, including a number and a letter.
+          </div>
+          <div
+            id="pwdStrength"
+            aria-hidden="true"
+            class="hint"
+            style="margin-top: 6px"
+          >
+            Strength: <span id="pwdStrengthText">—</span>
+          </div>
+          <div
+            id="passwordError"
+            class="error"
+            th:if="${#fields.hasErrors('password')}"
+            th:errors="*{password}"
+          ></div>
+        </div>
+        <div>
+          <label
+            >Account type
+            <select id="accountType" th:field="*{accountType}">
+              <option
+                value="student"
+                th:selected="${signupForm.accountType=='student'}"
+              >
+                Student
+              </option>
+              <option
+                value="teacher"
+                th:selected="${signupForm.accountType=='teacher'}"
+              >
+                Teacher
+              </option>
+            </select>
+          </label>
+        </div>
+        <div style="margin-top: 12px">
+          <button id="submitBtn" type="submit">Sign Up</button>
+        </div>
+      </form>
+
+      <p style="text-align: center; margin-top: 12px">
+        Already have an account? <a href="/login">Login</a>
+      </p>
+
+      <script src="/js/signup.js"></script>
+    </body>
+  </html>
+</html>

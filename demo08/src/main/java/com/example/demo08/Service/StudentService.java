@@ -83,4 +83,19 @@ public class StudentService {
         Student student = studentRepository.findByUsername(username);
         return student != null ? student.getStatus() : Student.ApprovalStatus.REJECTED;
     }
+
+    /**
+     * Create a student record for a newly registered student.
+     * If a record already exists, returns the existing student.
+     */
+    public Student createStudent(String username) {
+        Student existing = studentRepository.findByUsername(username);
+        if (existing != null) {
+            return existing;
+        }
+        Student s = new Student(username);
+        s.setStatus(Student.ApprovalStatus.PENDING);
+        studentRepository.save(s);
+        return s;
+    }
 }

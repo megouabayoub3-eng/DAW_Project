@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Review Application</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header"></div>
+    <main class="container my-4">
+      <h1>Review Application</h1>
+      <div class="row">
+        <div class="col-md-8">
+          <h4>Student Profile</h4>
+          <p>Full profile and uploaded documents will appear here.</p>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-3">
+            <h5>Decision</h5>
+            <form method="post">
+              <div class="mb-2">
+                <label class="form-label">Status</label>
+                <select class="form-select" name="status">
+                  <option>APPROVED</option>
+                  <option>PENDING</option>
+                  <option>REJECTED</option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Comments</label>
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  name="comments"
+                ></textarea>
+              </div>
+              <button class="btn btn-success">Save Decision</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/js/ui.js"></script>
+  </body>
+</html>

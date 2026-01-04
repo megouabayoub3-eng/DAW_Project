@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>My Profile</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header"></div>
+    <main class="container my-4">
+      <h1>Student Profile</h1>
+      <form>
+        <div class="mb-3">
+          <label class="form-label">Contact Email</label>
+          <input class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Major / Department</label>
+          <input class="form-control" />
+        </div>
+        <button class="btn btn-primary">Save</button>
+      </form>
+    </main>
+    <script src="/js/ui.js"></script>
+  </body>
+</html>

@@ -72,11 +72,6 @@
                       method="post"
                       class="d-inline"
                     >
-                      <input
-                        type="hidden"
-                        th:name="${_csrf.parameterName}"
-                        th:value="${_csrf.token}"
-                      />
                       <button type="submit" class="btn btn-success btn-sm">
                         ✓ Approve
                       </button>
@@ -117,11 +112,6 @@
                 method="post"
               >
                 <div class="modal-body">
-                  <input
-                    type="hidden"
-                    th:name="${_csrf.parameterName}"
-                    th:value="${_csrf.token}"
-                  />
                   <div class="mb-3">
                     <label for="reason" class="form-label"
                       >Rejection Reason</label

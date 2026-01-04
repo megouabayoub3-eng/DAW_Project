@@ -1,14 +1,18 @@
 package com.example.demo08.Controller;
 
-import com.example.demo08.Model.User;
-import com.example.demo08.Model.RegistrationStatus;
-import com.example.demo08.Repository.UserRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import com.example.demo08.Model.RegistrationStatus;
+import com.example.demo08.Model.User;
+import com.example.demo08.Repository.UserRepository;
 
 @Controller
 @RequestMapping("/admin")
@@ -16,6 +20,21 @@ public class AdminController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/analytics")
+    public String analytics(Model model) {
+        return "analytics";
+    }
+
+    @GetMapping("/notifications")
+    public String notifications(Model model) {
+        return "notifications";
+    }
+
+    @GetMapping("/settings")
+    public String settings(Model model) {
+        return "settings";
+    }
 
     // 1. View all Pending Users
     @GetMapping("/approvals")

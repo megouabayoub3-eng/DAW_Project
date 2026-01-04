@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Admin - Teachers</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <h1>Teachers</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Roles</th>
+          <th>Enabled</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="user : ${teachers}">
+          <td th:text="${user.id}">1</td>
+          <td th:text="${user.username}">teacher</td>
+          <td th:text="${user.email}">email</td>
+          <td th:text="${#strings.arrayJoin(user.roles.toArray(), ', ')}">
+            ROLE_TEACHER
+          </td>
+          <td th:text="${user.enabled}">true</td>
+          <td>
+            <a th:href="@{|/admin/users/${user.id}|}">View</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p><a href="/admin/users">Back to users</a></p>
+  </body>
+</html>

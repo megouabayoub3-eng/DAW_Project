@@ -1,4 +1,34 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Scholarship Catalog</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header"></div>
+    <main class="container my-4">
+      <h1>Scholarship Catalog</h1>
+      <p class="lead">Browse available scholarships and apply.</p>
+
+      <div class="grid">
+        <!-- Placeholder cards; replace with iteration over scholarships -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Scholarship A</h5>
+            <p class="card-text">Award: $1,000 — Deadline: 2026-02-01</p>
+            <a class="btn btn-outline-primary" href="/student/scholarship/apply"
+              >Apply Now</a
+            >
+            <a class="btn btn-link" href="#">View Details</a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/js/ui.js"></script>
+  </body>
+</html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />

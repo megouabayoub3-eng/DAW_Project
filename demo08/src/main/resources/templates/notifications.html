@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Notifications</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header"></div>
+    <main class="container my-4">
+      <h1>Notifications</h1>
+      <ul class="list-group">
+        <li class="list-group-item">Your application #1 has been received.</li>
+        <li class="list-group-item">
+          New scholarship "Scholarship A" is available.
+        </li>
+      </ul>
+    </main>
+    <script src="/js/ui.js"></script>
+  </body>
+</html>

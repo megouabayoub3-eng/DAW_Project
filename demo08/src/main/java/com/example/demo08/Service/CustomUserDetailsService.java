@@ -3,6 +3,8 @@ package com.example.demo08.Service;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo08.Model.RegistrationStatus;
 import com.example.demo08.Model.User;
 import com.example.demo08.Repository.UserRepository;
 

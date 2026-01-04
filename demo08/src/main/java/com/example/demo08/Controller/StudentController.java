@@ -27,34 +27,17 @@ public class StudentController {
         this.scholarshipService = scholarshipService;
     }
 
-    @GetMapping("/dashboard")
-    public String studentDashboard(Model model) {
-        model.addAttribute("message", "Welcome to your student dashboard!");
-        return "student";
+    @GetMapping("/scholarships")
+    public String catalog(Model model) {
+        return "student_scholarships";
     }
 
-    
-    @GetMapping("/pending")
-    public String pendingPage(Model model) {
-        model.addAttribute("message", "Your registration is currently under review. Please wait for approval.");
-        return "pending";
-    }
-
-   
-    @GetMapping("/rejected")
-    public String rejectedPage(Model model) {
-        model.addAttribute("message", "Your registration has been rejected. Please contact an administrator.");
-        return "rejected";
-    }
-
-    
     @GetMapping("/scholarship/apply")
     public String scholarshipApplyForm(Model model) {
         model.addAttribute("scholarshipForm", new ScholarshipForm());
-        return "scholarship_apply";
+        return "student_application_form";
     }
 
-    
     @PostMapping("/scholarship/apply")
     public String submitScholarshipApplication(
             @Valid @ModelAttribute("scholarshipForm") ScholarshipForm scholarshipForm,
@@ -63,7 +46,7 @@ public class StudentController {
             Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "scholarship_apply";
+            return "student_application_form";
         }
 
         String username = authentication.getName();
@@ -71,12 +54,34 @@ public class StudentController {
         return "redirect:/student/scholarship/my-applications";
     }
 
-   
     @GetMapping("/scholarship/my-applications")
     public String myScholarshipApplications(Model model, Authentication authentication) {
         String username = authentication.getName();
         List<ScholarshipApplication> apps = scholarshipService.getApplicationsByStudent(username);
         model.addAttribute("applications", apps);
-        return "student_scholarships";
+        return "student_applications";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        return "student_profile";
+    }
+
+    @GetMapping("/dashboard")
+    public String studentDashboard(Model model) {
+        model.addAttribute("message", "Welcome to your student dashboard!");
+        return "student";
+    }
+
+    @GetMapping("/pending")
+    public String pendingPage(Model model) {
+        model.addAttribute("message", "Your registration is currently under review. Please wait for approval.");
+        return "pending";
+    }
+
+    @GetMapping("/rejected")
+    public String rejectedPage(Model model) {
+        model.addAttribute("message", "Your registration has been rejected. Please contact an administrator.");
+        return "rejected";
     }
 }

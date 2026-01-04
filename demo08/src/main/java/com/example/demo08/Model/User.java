@@ -1,22 +1,24 @@
 package com.example.demo08.Model;
 
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
-/**
- * User entity representing authenticated users in the system.
- * Contains username, encoded password, and role information.
- */
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,34 +26,54 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @Column(nullable = false)
     private String password;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private Set<Role> roles = new HashSet<>();
+
     @Column(nullable = false)
-    private String role; // ROLE_TEACHER or ROLE_STUDENT
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
+    private boolean enabled = true;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RegistrationStatus status = RegistrationStatus.PENDING;
 
     // Constructors
     public User() {
     }
 
-    public User(String username, String password, String role) {
+    public User(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
-        this.role = role;
     }
 
-    // Getters and Setters
+    public User(String username, String fullName, String email, String password) {
+        this.username = username;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String username, String email, String password, Set<Role> roles, boolean enabled) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.enabled = enabled;
+    }
+
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -68,6 +90,22 @@ public class User {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -76,20 +114,24 @@ public class User {
         this.password = password;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public String getRole() {
-        return role;
+        return roles.isEmpty() ? "ROLE_USER" : roles.iterator().next().toString();
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public RegistrationStatus getStatus() {

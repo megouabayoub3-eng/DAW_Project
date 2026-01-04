@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Manage Scholarships</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header"></div>
+    <main class="container my-4">
+      <h1>Scholarship Management</h1>
+      <p class="lead">Create, edit or delete scholarship offers.</p>
+
+      <a class="btn btn-primary mb-3" href="#">New Scholarship</a>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Deadline</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Scholarship A</td>
+            <td>2026-02-01</td>
+            <td>
+              <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+              <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    <script src="/js/ui.js"></script>
+  </body>
+</html>
