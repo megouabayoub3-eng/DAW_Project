@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Rejected - Scholarship System</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">🎓 Scholarship System</a>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <div class="container">
+        <h1>❌ Registration Rejected</h1>
+        <p>Your application could not be approved</p>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card shadow-lg fade-in border-danger">
+            <div class="card-body text-center">
+              <h2 class="card-title text-danger mb-3">Registration Rejected</h2>
+              <p class="card-text lead" th:text="${message}">
+                Your registration has been rejected. Please contact an
+                administrator.
+              </p>
+
+              <div class="alert alert-danger mt-4">
+                <h5 class="alert-heading">⚠️ Action Required</h5>
+                <p class="mb-0">
+                  If you believe this decision was made in error, please contact
+                  the system administrator for more information or to appeal
+                  this decision.
+                </p>
+              </div>
+
+              <div class="mt-4">
+                <a href="/" class="btn btn-secondary">Back to Home</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Scholarship Management System.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

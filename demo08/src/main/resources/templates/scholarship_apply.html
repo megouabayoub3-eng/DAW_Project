@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Scholarship - Scholarship System</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">🎓 Scholarship System</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/student/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <div class="container">
+        <h1>📝 Apply for Scholarship</h1>
+        <p>Submit your scholarship application</p>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="card shadow-lg">
+            <div class="card-body">
+              <form
+                th:action="@{/student/scholarship/apply}"
+                th:object="${scholarshipForm}"
+                method="post"
+              >
+                <input
+                  type="hidden"
+                  th:name="${_csrf.parameterName}"
+                  th:value="${_csrf.token}"
+                />
+
+                <div class="mb-3">
+                  <label for="amount" class="form-label"
+                    >Amount Requested</label
+                  >
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input
+                      type="number"
+                      step="0.01"
+                      id="amount"
+                      th:field="*{amount}"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div
+                    th:if="${#fields.hasErrors('amount')}"
+                    class="form-error"
+                    th:errors="*{amount}"
+                  ></div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="reason" class="form-label"
+                    >Reason for Application</label
+                  >
+                  <textarea
+                    id="reason"
+                    th:field="*{reason}"
+                    class="form-control"
+                    rows="5"
+                    placeholder="Explain why you need this scholarship..."
+                    required
+                  ></textarea>
+                  <small class="text-muted">Max 1000 characters</small>
+                  <div
+                    th:if="${#fields.hasErrors('reason')}"
+                    class="form-error"
+                    th:errors="*{reason}"
+                  ></div>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-primary flex-grow-1">
+                    Submit Application
+                  </button>
+                  <a href="/student/dashboard" class="btn btn-secondary"
+                    >Cancel</a
+                  >
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Scholarship Management System.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

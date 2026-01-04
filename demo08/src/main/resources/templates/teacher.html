@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Dashboard - Scholarship System</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">🎓 Scholarship System</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <div class="container">
+        <h1>👨‍🏫 Teacher Dashboard</h1>
+        <p>Manage student registrations and scholarships</p>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="dashboard-section">
+            <h2>Quick Actions</h2>
+            <div class="row g-3 mb-5">
+              <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">📋 Scholarship Review</h5>
+                    <p class="card-text text-muted">
+                      Review pending applications
+                    </p>
+                    <a
+                      th:href="@{/teacher/scholarships}"
+                      class="btn btn-primary"
+                      >Review Now</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-section" th:if="${students != null}">
+            <h2>Registered Students</h2>
+            <div class="list-group">
+              <div
+                th:each="s : ${students}"
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                <div>
+                  <h6 class="mb-1" th:text="${s.username}"></h6>
+                  <small class="text-muted"
+                    >Registered:
+                    <span
+                      th:text="${#temporals.format(s.registrationDate, 'MMM dd, yyyy')}"
+                    ></span
+                  ></small>
+                </div>
+                <span
+                  th:if="${s.status == 'ACCEPTED'}"
+                  class="badge badge-approved"
+                  >✓ Accepted</span
+                >
+                <span
+                  th:if="${s.status == 'PENDING'}"
+                  class="badge badge-pending"
+                  >⏳ Pending</span
+                >
+                <span
+                  th:if="${s.status == 'REJECTED'}"
+                  class="badge badge-rejected"
+                  >✗ Rejected</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Scholarship Management System.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
