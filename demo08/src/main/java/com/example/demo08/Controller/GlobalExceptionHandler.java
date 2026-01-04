@@ -6,6 +6,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -16,6 +18,20 @@ public class GlobalExceptionHandler {
     public String handleConflict(DataIntegrityViolationException ex, Model model) {
         log.warn("Data integrity violation", ex);
         model.addAttribute("error", "A user with that email or username already exists.");
+        return "signup";
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public String handleValidationException(MethodArgumentNotValidException ex, Model model) {
+        log.warn("Validation error", ex);
+        model.addAttribute("error", "Invalid input data. Please check your entries and try again.");
+        return "signup";
+    }
+
+    @ExceptionHandler(BindException.class)
+    public String handleBindException(BindException ex, Model model) {
+        log.warn("Binding error", ex);
+        model.addAttribute("error", "Invalid input data. Please check your entries and try again.");
         return "signup";
     }
 

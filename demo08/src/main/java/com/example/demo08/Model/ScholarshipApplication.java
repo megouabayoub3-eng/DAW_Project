@@ -12,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "scholarship_applications")
@@ -25,16 +28,20 @@ public class ScholarshipApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Student is required")
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @NotBlank(message = "Reason is required")
     @Column(nullable = false)
     private String reason;
 
+    @Positive(message = "Amount requested must be positive")
     @Column(nullable = false)
     private double amountRequested;
 
+    @NotNull(message = "Status cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status = Status.PENDING;

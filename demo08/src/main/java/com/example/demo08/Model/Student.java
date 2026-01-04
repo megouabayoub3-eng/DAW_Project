@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Student entity containing approval status and related metadata.
@@ -23,9 +25,11 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Username is required")
     @Column(nullable = false, unique = true)
     private String username; // Links to User entity
 
+    @NotNull(message = "Status cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApprovalStatus status = ApprovalStatus.PENDING; // Default to PENDING
