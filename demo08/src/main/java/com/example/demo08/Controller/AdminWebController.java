@@ -46,13 +46,13 @@ public class AdminWebController {
     @PostMapping("/students/{username}/approve")
     public String approveStudentByAdmin(@PathVariable String username) {
         studentService.approveStudent(username, "admin");
-        return "redirect:/admin/students";
+        return "redirect:/admin/users/students";
     }
 
     @PostMapping("/students/{username}/reject")
     public String rejectStudentByAdmin(@PathVariable String username, @RequestParam(required = false) String reason) {
         studentService.rejectStudent(username, "admin", reason);
-        return "redirect:/admin/students";
+        return "redirect:/admin/users/students";
     }
 
     @GetMapping("/teachers")
