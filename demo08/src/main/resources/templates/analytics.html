@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Analytics</title>
-    <link href="/css/style.css" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
@@ -37,6 +37,6 @@
         });
       }
     </script>
-    <script src="/js/ui.js"></script>
+    <script th:src="@{/js/ui.js}"></script>
   </body>
 </html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Settings</title>
-    <link href="/css/style.css" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
   </head>
   <body>
     <div th:replace="fragments/header :: header"></div>
@@ -12,6 +12,6 @@
       <p>Change password or enable two-factor authentication (placeholder).</p>
       <a class="btn btn-outline-primary" href="#">Change Password</a>
     </main>
-    <script src="/js/ui.js"></script>
+    <script th:src="@{/js/ui.js}"></script>
   </body>
 </html>

@@ -65,8 +65,8 @@ public class AdminRestController {
     }
 
     @PatchMapping("/{id}/enabled")
-    public UserDto setEnabled(@PathVariable Long id, @RequestParam boolean enabled) {
-        return userService.setEnabled(id, enabled);
+    public UserDto setEnabled(@PathVariable Long id, @RequestBody EnabledRequest req) {
+        return userService.setEnabled(id, req.isEnabled());
     }
 
     @DeleteMapping("/{id}")
@@ -114,6 +114,19 @@ public class AdminRestController {
         public void setRoles(Set<Role> roles) {
             this.roles = roles;
         }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+    }
+
+    // small DTO for enabled patch
+    public static class EnabledRequest {
+        private boolean enabled;
 
         public boolean isEnabled() {
             return enabled;

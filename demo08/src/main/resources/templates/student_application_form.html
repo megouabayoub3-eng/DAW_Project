@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Apply - Scholarship</title>
-    <link href="/css/style.css" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
   </head>
   <body>
     <div th:replace="fragments/header :: header"></div>
@@ -22,10 +22,10 @@
         </div>
         <div class="d-flex gap-2">
           <button class="btn btn-secondary">Save & Continue</button>
-          <a class="btn btn-link" href="/student/scholarships">Cancel</a>
+          <a class="btn btn-link" th:href="@{/student/scholarships}">Cancel</a>
         </div>
       </form>
     </main>
-    <script src="/js/ui.js"></script>
+    <script th:src="@{/js/ui.js}"></script>
   </body>
 </html>

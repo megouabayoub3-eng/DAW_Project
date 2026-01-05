@@ -40,6 +40,20 @@
           >
             Dark
           </button>
+          <a
+            th:href="@{/admin/approvals}"
+            class="btn btn-sm btn-outline-light position-relative me-2"
+            sec:authorize="hasRole('ROLE_ADMIN')"
+            title="Approvals"
+          >
+            <i class="bi bi-bell"></i>
+            <span
+              th:if="${pendingCount != null and pendingCount > 0}"
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              th:text="${pendingCount}"
+              >0</span
+            >
+          </a>
           <div class="dropdown">
             <a
               class="btn btn-sm btn-outline-secondary dropdown-toggle"

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Review Queue</title>
-    <link href="/css/style.css" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
   </head>
   <body>
     <div th:replace="fragments/header :: header"></div>
@@ -28,7 +28,7 @@
             <td>Scholarship A</td>
             <td>2026-01-02</td>
             <td>
-              <a class="btn btn-sm btn-primary" href="/teacher/review"
+              <a class="btn btn-sm btn-primary" th:href="@{/teacher/review}"
                 >Review</a
               >
             </td>
@@ -36,6 +36,6 @@
         </tbody>
       </table>
     </main>
-    <script src="/js/ui.js"></script>
+    <script th:src="@{/js/ui.js}"></script>
   </body>
 </html>

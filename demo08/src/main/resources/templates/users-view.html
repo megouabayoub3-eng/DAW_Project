@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Admin - User</title>
-</head>
-<body>
-<h1 th:text="'User: ' + ${user.username}">User</h1>
+  </head>
+  <body>
+    <h1 th:text="'User: ' + ${user.username}">User</h1>
 
-<div>
-    <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
-    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
-    <p><strong>Roles:</strong></p>
-    <form th:action="@{|/admin/users/${user.id}/roles|}" method="post">
+    <div>
+      <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+      <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+      <p><strong>Roles:</strong></p>
+      <form th:action="@{|/admin/users/${user.id}/roles|}" method="post">
         <div th:each="r : ${allRoles}">
-            <label>
-                <input type="checkbox" name="roles"
-                       th:value="${r}"
-                       th:checked="${user.roles.contains(r)}" />
-                <span th:text="${r}">ROLE_USER</span>
-            </label>
+          <label>
+            <input
+              type="checkbox"
+              name="roles"
+              th:value="${r}"
+              th:checked="${user.roles.contains(r)}"
+            />
+            <span th:text="${r}">ROLE_USER</span>
+          </label>
         </div>
         <button type="submit">Save roles</button>
-    </form>
-</div>
+      </form>
+    </div>
 
-<div>
-    <form th:action="@{|/admin/users/${user.id}/enable|}" method="post">
+    <div>
+      <form th:action="@{|/admin/users/${user.id}/enable|}" method="post">
         <input type="hidden" name="enabled" th:value="${!user.enabled}" />
-        <button type="submit" th:text="${user.enabled ? 'Disable' : 'Enable'}">Toggle</button>
-    </form>
-</div>
+        <button type="submit" th:text="${user.enabled ? 'Disable' : 'Enable'}">
+          Toggle
+        </button>
+      </form>
+    </div>
 
-<div>
-    <form th:action="@{|/admin/users/${user.id}/delete|}" method="post" onsubmit="return confirm('Delete user?');">
+    <div>
+      <form
+        th:action="@{|/admin/users/${user.id}/delete|}"
+        method="post"
+        onsubmit="return confirm('Delete user?');"
+      >
         <button type="submit">Delete user</button>
-    </form>
-</div>
+      </form>
+    </div>
 
-<p><a href="/admin/users">Back to list</a></p>
-</body>
+    <p><a th:href="@{/admin/users}">Back to list</a></p>
+  </body>
 </html>
