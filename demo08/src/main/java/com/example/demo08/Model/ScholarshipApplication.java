@@ -2,6 +2,7 @@ package com.example.demo08.Model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,10 +12,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "scholarship_applications")
@@ -57,6 +62,9 @@ public class ScholarshipApplication {
 
     @Column(name = "rejection_reason")
     private String rejectionReason;
+
+    @OneToMany(mappedBy = "scholarshipApplication", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Document> documents = new ArrayList<>();
 
     public ScholarshipApplication() {
     }
@@ -139,5 +147,23 @@ public class ScholarshipApplication {
 
     public void setRejectionReason(String rejectionReason) {
         this.rejectionReason = rejectionReason;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+    
+    public void addDocument(Document document) {
+        documents.add(document);
+        document.setScholarshipApplication(this);
+    }
+    
+    public void removeDocument(Document document) {
+        documents.remove(document);
+        document.setScholarshipApplication(null);
     }
 }
