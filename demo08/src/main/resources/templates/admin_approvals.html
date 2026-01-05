@@ -101,6 +101,52 @@
           </tbody>
         </table>
       </div>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div class="text-muted">
+          Total pending: <strong th:text="${pendingCount}">0</strong>
+        </div>
+        <div>
+          <nav
+            th:if="${totalPages != null and totalPages > 1}"
+            aria-label="Page navigation"
+          >
+            <ul class="pagination mb-0">
+              <li
+                class="page-item"
+                th:classappend="${currentPage == 0} ? 'disabled'"
+              >
+                <a
+                  class="page-link"
+                  th:href="@{/admin/approvals(page=${currentPage-1},size=${pageSize})}"
+                  >Previous</a
+                >
+              </li>
+              <li
+                class="page-item"
+                th:each="i : ${#numbers.sequence(0, totalPages-1)}"
+                th:classappend="${i==currentPage} ? 'active'"
+              >
+                <a
+                  class="page-link"
+                  th:href="@{/admin/approvals(page=${i},size=${pageSize})}"
+                  th:text="${i + 1}"
+                  >1</a
+                >
+              </li>
+              <li
+                class="page-item"
+                th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'"
+              >
+                <a
+                  class="page-link"
+                  th:href="@{/admin/approvals(page=${currentPage+1},size=${pageSize})}"
+                  >Next</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
       <a href="/" class="btn btn-primary">Back to Home</a>
     </div>
     <script src="/js/admin-approvals.js"></script>

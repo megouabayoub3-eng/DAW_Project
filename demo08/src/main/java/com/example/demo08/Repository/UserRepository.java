@@ -3,6 +3,8 @@ package com.example.demo08.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo08.Model.RegistrationStatus;
@@ -14,6 +16,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     List<User> findByStatus(RegistrationStatus status);
+
+    Page<User> findByStatus(RegistrationStatus status, Pageable pageable);
+
+    long countByStatus(RegistrationStatus status);
 
     boolean existsByUsername(String username);
 }

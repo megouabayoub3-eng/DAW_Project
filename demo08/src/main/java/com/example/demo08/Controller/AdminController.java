@@ -1,7 +1,5 @@
 package com.example.demo08.Controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +36,17 @@ public class AdminController {
 
     // 1. View all Pending Users
     @GetMapping("/approvals")
-    public String viewPendingApprovals(Model model) {
-        List<User> pendingUsers = userRepository.findByStatus(RegistrationStatus.PENDING);
-        model.addAttribute("pendingUsers", pendingUsers);
+    public String viewPendingApprovals(Model model,
+            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "0") int page,
+            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "10") int size) {
+        org.springframework.data.domain.PageRequest pr = org.springframework.data.domain.PageRequest.of(page, size);
+        org.springframework.data.domain.Page<User> pendingPage = userRepository.findByStatus(RegistrationStatus.PENDING,
+                pr);
+        model.addAttribute("pendingUsers", pendingPage.getContent());
+        model.addAttribute("pendingCount", userRepository.countByStatus(RegistrationStatus.PENDING));
+        model.addAttribute("currentPage", pendingPage.getNumber());
+        model.addAttribute("totalPages", pendingPage.getTotalPages());
+        model.addAttribute("pageSize", pendingPage.getSize());
         return "admin_approvals";
     }
 
