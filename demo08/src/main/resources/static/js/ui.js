@@ -10,8 +10,11 @@
     const saved = localStorage.getItem("dark_mode");
     applyDarkMode(saved === "1");
   } catch (e) {}
-
+  // ensure initial label matches current state
   if (darkToggle) {
+    darkToggle.textContent = document.body.classList.contains("dark")
+      ? "Light"
+      : "Dark";
     darkToggle.addEventListener("click", function () {
       const enabled = !document.body.classList.contains("dark");
       applyDarkMode(enabled);

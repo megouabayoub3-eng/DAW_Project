@@ -398,7 +398,56 @@ body.dark .table {
   color: #333;
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--primary-color);
+  border-bottom: 2px solid var(--primary-500);
+}
+
+/* Brand logo in header */
+.brand-logo {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 18px;
+}
+
+/* Sidebar */
+.sidebar {
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+.sidebar .sidebar-brand {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--primary-700);
+  padding: 0.5rem 0;
+}
+.sidebar .nav-link {
+  color: #334155;
+  padding: 0.6rem 0.5rem;
+  border-radius: 8px;
+}
+.sidebar .nav-link:hover {
+  background: rgba(31, 111, 235, 0.06);
+  color: var(--primary-700);
+}
+
+/* badges using theme variables */
+.badge-approved {
+  background-color: var(--success);
+  color: #fff;
+}
+.badge-pending {
+  background-color: var(--warning);
+  color: #000;
+}
+.badge-rejected {
+  background-color: var(--danger);
+  color: #fff;
 }
 
 .list-group-item {
