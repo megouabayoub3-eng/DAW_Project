@@ -6,10 +6,13 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo08.Model.Document;
 import com.example.demo08.Model.ScholarshipApplication;
 import com.example.demo08.Model.ScholarshipApplication.Status;
 import com.example.demo08.Model.Student;
+import com.example.demo08.Repository.DocumentRepository;
 import com.example.demo08.Repository.ScholarshipApplicationRepository;
 import com.example.demo08.Repository.StudentRepository;
 
@@ -19,20 +22,48 @@ public class ScholarshipService {
 
     private final ScholarshipApplicationRepository applicationRepository;
     private final StudentRepository studentRepository;
+    private final DocumentRepository documentRepository;
+    private final EmailService emailService;
 
     public ScholarshipService(ScholarshipApplicationRepository applicationRepository,
-            StudentRepository studentRepository) {
+            StudentRepository studentRepository, DocumentRepository documentRepository, EmailService emailService) {
         this.applicationRepository = applicationRepository;
         this.studentRepository = studentRepository;
+        this.documentRepository = documentRepository;
+        this.emailService = emailService;
     }
 
-    public ScholarshipApplication applyForScholarship(String studentUsername, double amountRequested, String reason) {
+    public ScholarshipApplication applyForScholarship(String studentUsername, double amountRequested, String reason, List<MultipartFile> files) {
         Student student = studentRepository.findByUsername(studentUsername);
         if (student == null) {
             throw new IllegalArgumentException("Student not found: " + studentUsername);
         }
         ScholarshipApplication app = new ScholarshipApplication(student, reason, amountRequested);
-        return applicationRepository.save(app);
+        ScholarshipApplication savedApp = applicationRepository.save(app);
+        
+        // Save documents if provided
+        if (files != null) {
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    try {
+                        Document document = new Document(
+                            file.getOriginalFilename(),
+                            getFileType(file.getOriginalFilename()),
+                            file.getBytes(),
+                            file.getSize(),
+                            file.getContentType()
+                        );
+                        document.setScholarshipApplication(savedApp);
+                        documentRepository.save(document);
+                        savedApp.addDocument(document);
+                    } catch (Exception e) {
+                        throw new RuntimeException("Failed to save document: " + e.getMessage(), e);
+                    }
+                }
+            }
+        }
+        
+        return savedApp;
     }
 
     public List<ScholarshipApplication> getPendingApplications() {
@@ -54,6 +85,10 @@ public class ScholarshipService {
         app.setReviewedAt(LocalDateTime.now());
         app.setReviewedBy(teacherUsername);
         applicationRepository.save(app);
+        
+        // Send email notification
+        emailService.sendApplicationStatusUpdate(app.getStudent().getEmail(), "APPROVED", "Your scholarship application has been approved.");
+        
         return true;
     }
 
@@ -69,6 +104,17 @@ public class ScholarshipService {
         app.setReviewedBy(teacherUsername);
         app.setRejectionReason(reason);
         applicationRepository.save(app);
+        
+        // Send email notification
+        emailService.sendApplicationStatusUpdate(app.getStudent().getEmail(), "REJECTED", reason);
+        
         return true;
+    }
+    
+    private String getFileType(String filename) {
+        if (filename == null || !filename.contains(".")) {
+            return "UNKNOWN";
+        }
+        return filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
     }
 }

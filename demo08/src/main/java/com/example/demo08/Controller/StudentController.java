@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo08.Model.ScholarshipApplication;
 import com.example.demo08.Model.ScholarshipForm;
@@ -42,6 +44,7 @@ public class StudentController {
     public String submitScholarshipApplication(
             @Valid @ModelAttribute("scholarshipForm") ScholarshipForm scholarshipForm,
             BindingResult bindingResult,
+            @RequestParam(value = "documents", required = false) List<MultipartFile> documents,
             Authentication authentication,
             Model model) {
 
@@ -50,7 +53,7 @@ public class StudentController {
         }
 
         String username = authentication.getName();
-        scholarshipService.applyForScholarship(username, scholarshipForm.getAmount(), scholarshipForm.getReason());
+        scholarshipService.applyForScholarship(username, scholarshipForm.getAmount(), scholarshipForm.getReason(), documents);
         return "redirect:/student/scholarship/my-applications";
     }
 

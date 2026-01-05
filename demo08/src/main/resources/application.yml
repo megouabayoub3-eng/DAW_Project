@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: demo08
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      cache:
+        period: 0
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    com.example.demo08: DEBUG
